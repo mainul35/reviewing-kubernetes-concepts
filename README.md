@@ -32,7 +32,7 @@ Every kubernetes object manifest file has 4 root level fields:
 - **metadata:** Contains metadata of a manifest denition, can be used by other objects.
 - **spec:** Specification based on which the object will be created
 #### Namespace
-Namespace can be simply described as a group or a common area, where all the resources residents under the same namespace belong.
+Namespace can be simply described as a group or a common area. All the resources (kubernetes objects) reside under the same namespace.
 
 **Example namespace definition:**
 ```todo.namespace.yaml
