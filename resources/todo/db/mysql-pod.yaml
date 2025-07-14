@@ -1,0 +1,33 @@
+# mysql-pod.yaml
+apiVersion: v1 # Pods are v1 API version
+kind: Pod # Specify the kind as Pod
+metadata:
+  name: todo-db-pod # Give the Pod a unique name
+  namespace: todo-ns # Specify the namespace
+  labels:
+    app: todo-db # Keep the label for consistency, though not strictly required for a standalone Pod
+spec:
+  containers:
+    - name: mysql
+      image: mysql:8.0
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-root-password
+              key: MYSQL_ROOT_PASSWORD
+      ports:
+        - containerPort: 3306
+          name: mysql
+      volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+        - name: mysql-init-volume
+          mountPath: /docker-entrypoint-initdb.d
+  volumes:
+    - name: mysql-persistent-storage
+      persistentVolumeClaim:
+        claimName: mysql-pv-claim
+    - name: mysql-init-volume
+      configMap:
+        name: mysql-init-scripts

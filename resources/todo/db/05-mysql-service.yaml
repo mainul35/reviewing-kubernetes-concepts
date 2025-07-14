@@ -1,0 +1,16 @@
+# 05-mysql-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-db-service
+  namespace: todo-ns
+  labels:
+    app: todo-db
+spec:
+  selector:
+    app: todo-db
+  ports:
+    - protocol: TCP
+      port: 3306        # The port on the Service (internal to cluster)
+      targetPort: 3306  # The port on the Pod/container
+  type: LoadBalancer      # <--- Change this to LoadBalancer

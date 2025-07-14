@@ -1,0 +1,18 @@
+# 02-mysql-init-configmap.yaml
+apiVersion: v1
+data:
+  init.sql: |
+    CREATE DATABASE IF NOT EXISTS todo_app_db;
+    USE todo_app_db;
+    CREATE TABLE IF NOT EXISTS tasks (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        description VARCHAR(255) NOT NULL,
+        completed BOOLEAN DEFAULT FALSE
+    );
+    INSERT INTO tasks (description) VALUES ('Learn Kubernetes');
+    INSERT INTO tasks (description) VALUES ('Build a ToDo app');
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: mysql-init-scripts
+  namespace: todo-ns # <--- Namespace specified here

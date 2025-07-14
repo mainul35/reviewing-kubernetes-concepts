@@ -1,0 +1,13 @@
+# 03-mysql-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  namespace: todo-ns # <--- Namespace specified here
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  # storageClassName: standard # Uncomment and specify if you don't have a default StorageClass or want a specific one
