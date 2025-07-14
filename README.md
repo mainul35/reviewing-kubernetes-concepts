@@ -225,6 +225,13 @@ spec:
                         #     (Optional: If omitted, Kubernetes assigns a random port from 30000-32767)
   type: NodePort      # <--- Change this from ClusterIP to NodePort
 ```
+
+Apply the todo db service:
+
+```shell
+kubectl apply -f 05-mysql-service.yaml
+```
+
 If you are using Minikube cluster, you can get your node ip address as follows:
 
 ```shell
@@ -247,12 +254,48 @@ spec:
     - protocol: TCP
       port: 3306        # The port on the Service (internal to cluster)
       targetPort: 3306  # The port on the Pod/container
-  type: LoadBalancer      # <--- Change this to LoadBalancer
-
+  type: LoadBalancer
+  loadBalancerIP: 192.168.49.201
 ```
-Enable minikube node balancer:
+You can enable LoadBalancer support for minikube in 2 ways. 
+
+
+i. Native support, enable minikube node balancer:
 ```shell
 minikube tunnel
+```
+ii. With metallb plugin:
+Enable metallb plugin for minikube:
+```shell
+minikube addons enable metallb
+```
+Startup metallb service:
+```shell
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.5/config/manifests/metallb-native.yaml
+```
+
+Configure load balancer IP range for services:
+```metallb.config.yaml
+# metallb.config.yaml
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: my-ip-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 192.168.49.200-192.168.49.250  # Use minikube's network range
+
+```
+
+Apply the metallb config file:
+```shell
+kubectl apply -f metallb.config.yaml
+```
+
+Apply the todo db service:
+```shell
+kubectl apply -f 05-mysql-service.yaml
 ```
 
 **ExternalName:** Maps the service to a DNS name, not to any Pods.

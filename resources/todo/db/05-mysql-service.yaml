@@ -13,4 +13,5 @@ spec:
     - protocol: TCP
       port: 3306        # The port on the Service (internal to cluster)
       targetPort: 3306  # The port on the Pod/container
-  type: LoadBalancer      # <--- Change this to LoadBalancer
+  type: LoadBalancer
+  loadBalancerIP: 192.168.49.201
