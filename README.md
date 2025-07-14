@@ -66,7 +66,7 @@ To verify the change of the namespace for the current context:
 ```shell
 kubectl config view --minify | grep namespace:
 ```
-``
+
 #### Pod
 Consists of at least 1 container. Sometimes, can have sidecar (helper) containers as well.
 
@@ -176,7 +176,9 @@ spec:
 ```
 #### Services
 Services are used to bind network to the pods. Services can be of 4 types.
+
 **ClusterIP:** Only accessible by services running inside the kubernetes cluster. Doesn't expose outside.
+
 Example:
 ```05-mysql-service.yaml
 # 05-mysql-service.yaml
@@ -200,6 +202,7 @@ spec:
   # or type: LoadBalancer (if your cluster has a LoadBalancer controller like MetalLB)
 
 ```
+
 **NodePort:** Upon the definition of `nodePort` under the `ports` section and mentioning the Service `type: NodePort` the service becomes accessible to the host with the `clusterIp:nodePort`.
 Example:
 ```05-mysql-service.yaml
@@ -222,6 +225,11 @@ spec:
                         #     (Optional: If omitted, Kubernetes assigns a random port from 30000-32767)
   type: NodePort      # <--- Change this from ClusterIP to NodePort
 ```
+If you are using Minikube cluster, you can get your node ip address as follows:
+
+```shell
+minikube ip
+```
 **LoadBalancer:** If a load balancer is provided, the service is exposed with a domain name to that loadBalancer.
 ```05-mysql-service.yaml
 # 05-mysql-service.yaml
@@ -241,6 +249,10 @@ spec:
       targetPort: 3306  # The port on the Pod/container
   type: LoadBalancer      # <--- Change this to LoadBalancer
 
+```
+Enable minikube node balancer:
+```shell
+minikube tunnel
 ```
 
 **ExternalName:** Maps the service to a DNS name, not to any Pods.
@@ -305,16 +317,7 @@ spec:
 
 ```
 ### Kubernetes basic commands
-If you are using Minikube cluster, you can get your node ip address as follows:
 
-```shell
-minikube ip
-```
-
-Enable minikube node balancer:
-```shell
-minikube tunnel
-```
 #### Get all resources currently running
 ```shell
 kubectl get all
