@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    image: 192.168.0.47:5000/app-wear-app:latest
+    ports:
+      - "3006:3000"
+    environment:
+      - NODE_ENV=production
