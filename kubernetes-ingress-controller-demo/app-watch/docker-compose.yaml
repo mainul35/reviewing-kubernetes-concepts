@@ -3,7 +3,8 @@ version: '3.8'
 services:
   app:
     build: .
+    image: 192.168.0.47:5000/app-watch-app:1.0.0
     ports:
-      - "3005:3000"
+      - "3008:3000"
     environment:
       - NODE_ENV=production

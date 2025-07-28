@@ -17,3 +17,13 @@ spec:
                 name: app-wear-service
                 port:
                   number: 80
+    - host: appwatch.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: app-watch-service
+                port:
+                  number: 80
