@@ -202,10 +202,11 @@ Explanation:
 
 Ingress maps requests for appwear.local to your app-wear service.
 Annotations and ingressClassName ensure NGINX processes this resource.
-6. Modifying the Hosts File
+6. Modifying the Hosts File from `/etc/hosts` or `C:\Windows\System32\drivers\etc\hosts` location
 Add this line to your hosts file (hosts):
 ```hosts
-127.0.0.1 appwear.local
+127.0.0.1   appwear.local
+127.0.0.1   appwatch.local
 ```
 
 Explanation:
@@ -225,6 +226,11 @@ http://appwear.local:<tunnel-port>/
 Or use curl:
 ```
 curl -H "Host: appwear.local" http://127.0.0.1:<tunnel-port>/
+```
+
+However, if you want to avoid providing port and use port 80, run the below command:
+```shell
+kubectl port-forward service/nginx-ingress 80:80
 ```
 8. Troubleshooting Tips
 Pod not starting: Check ServiceAccount and RBAC permissions.
