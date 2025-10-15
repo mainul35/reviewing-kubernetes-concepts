@@ -25,9 +25,9 @@ It usually resides in worker nodes and communicate with kube-apiserver in the ma
 
 ### Common Kubernetes Objects
 
-Every kubernetes object manifest file has 4 root level fields:
+Every kubernetes object manifest file has **4 root level (3 in newer versions)** fields:
 
-- **apiVersion:** Version of the **kind** definition
+- **apiVersion:** Version of the **kind** definition (deprecated in newer versions)
 - **kind:** Can be Pod, Deployment, ReplicaSet, ConfigMap, Service, Ingress, Job, etc.
 - **metadata:** Contains metadata of a manifest denition, can be used by other objects.
 - **spec:** Specification based on which the object will be created
